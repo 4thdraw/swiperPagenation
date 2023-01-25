@@ -8,12 +8,22 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <style>
+        .swiper-pagination .btn  span:nth-child(2){      
+             display: none;
+             background-color: black;
+             color:white
+        }
+        .swiper-pagination .btn  span:nth-child(1){      
+             display: block;
+        }
+        .swiper-pagination .btn.active   span:nth-child(2){ display: block;}
+        .swiper-pagination .btn.active   span:nth-child(1){ display: none;}
+
+        .swiper-pagination{
+            display: flex; justify-content: center; align-items: center;
+        }
        #myswiper .swiper-slide{ background-color: #ccc; height: 100vw; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        /* 
-        플러그인 튜닝 + 스타일처리  : 웹퍼블리셔 업무중 기본!!!
-        1024 / 991 / 768 / 1150  -> 이미지는 1080으로 처리해둔다
-        모바일에서는 앞뒤버튼 없어지고 1.5개로 노출되고 스크롤 나와야합니다. 높이는 화면너비와 동일하게 처리해주세요. 
-        */
+
        #myswiper .swiper-horizontal>.swiper-scrollbar, 
        #myswiper .swiper-scrollbar.swiper-scrollbar-horizontal{
         height:1px;
@@ -76,13 +86,18 @@
                     disableOnInteraction: false,
                 }, 
             pagination: {
+                bulletActiveClass: 'active',
+                bulletClass: 'btn',
                 el: "#myswiper .swiper-pagination",
                 clickable: true,
                 renderBullet: function (index, className) {
                 //    realIndex
                 //    slides -> swiper-slide객체 Array
                 // function 함수 내의 실행식 변수에 접근하려면 this로 접근해야만한다.
-                return '<div class="'+className+'"><span>' + this.slides[index].getAttribute('data-btn') + '</span></div>';              
+                return `<div class="${className}">
+                           <span>${index + 1 }</span>
+                           <span>${this.slides[index].getAttribute('data-btn')}</span>
+                        </div>`;            
               
                 }
             },
